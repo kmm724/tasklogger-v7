@@ -1,6 +1,5 @@
-// App.js
 import React from 'react';
-import { AppProvider } from './contexts/AppContext';
+import { AppProvider } from './context/AppContext';
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App() {

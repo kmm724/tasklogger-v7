@@ -1,7 +1,7 @@
-// /contexts/AppContext.js
-import React, { createContext, useState } from 'react';
+// context/AppContext.js
+import React, { createContext, useState, useContext } from 'react';
 
-export const AppContext = createContext();
+const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [activeUser, setActiveUser] = useState(null);
@@ -12,3 +12,5 @@ export const AppProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
+
+export const useAppContext = () => useContext(AppContext);

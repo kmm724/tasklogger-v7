@@ -1,16 +1,32 @@
-// /navigation/AppNavigator.js
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
+import { useAppContext } from '../context/AppContext';
+import LoginScreen from '../screens/LoginScreen';
+import HomeGC from '../screens/HomeGC';
+import HomeSupervisor from '../screens/HomeSupervisor';
+import HomeLaborer from '../screens/HomeLaborer';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
+  const { activeUser } = useAppContext();
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        {activeUser == null && (
+          <Stack.Screen name="Login" component={LoginScreen} />
+        )}
+        {activeUser?.role === 'gc' && (
+          <Stack.Screen name="HomeGC" component={HomeGC} />
+        )}
+        {activeUser?.role === 'supervisor' && (
+          <Stack.Screen name="HomeSupervisor" component={HomeSupervisor} />
+        )}
+        {activeUser?.role === 'laborer' && (
+          <Stack.Screen name="HomeLaborer" component={HomeLaborer} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
