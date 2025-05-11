@@ -1,15 +1,15 @@
-// screens/HomeGC.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, FlatList } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { useAppContext } from '../context/AppContext';
 
-export default function HomeGC() {
-  const [noteText, setNoteText] = useState('');
-  const [notes, setNotes] = useState([]);
+export default function HomeGC({ navigation }) {
+  const { notes, addNote } = useAppContext();
+  const [newNote, setNewNote] = useState('');
 
   const handleAddNote = () => {
-    if (noteText.trim()) {
-      setNotes([...notes, { id: Date.now().toString(), text: noteText }]);
-      setNoteText('');
+    if (newNote.trim() !== '') {
+      addNote({ id: Date.now().toString(), text: newNote });
+      setNewNote('');
     }
   };
 
@@ -18,37 +18,25 @@ export default function HomeGC() {
       <Text style={styles.title}>GC Dashboard</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter note"
-        value={noteText}
-        onChangeText={setNoteText}
+        placeholder="Add Note"
+        value={newNote}
+        onChangeText={setNewNote}
       />
       <Button title="Add Note" onPress={handleAddNote} />
+      {/* ✅ Corrected navigation target */}
+      <Button title="Manage Employees" onPress={() => navigation.navigate('ManageEmployees')} />
       <FlatList
         data={notes}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text style={styles.noteItem}>{item.text}</Text>}
+        renderItem={({ item }) => <Text style={styles.note}>{item.text}</Text>}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
-  },
-  noteItem: {
-    fontSize: 18,
-    paddingVertical: 5,
-  },
+  container: { flex: 1, padding: 16 },
+  title: { fontSize: 24, marginBottom: 12 },
+  input: { borderWidth: 1, padding: 8, marginBottom: 12 },
+  note: { padding: 8, borderBottomWidth: 1 },
 });

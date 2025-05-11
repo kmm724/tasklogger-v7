@@ -1,3 +1,4 @@
+// context/AppContext.js
 import React, { createContext, useState, useContext } from 'react';
 
 const AppContext = createContext();
@@ -6,8 +7,8 @@ export const AppProvider = ({ children }) => {
   const [activeUser, setActiveUser] = useState(null);
   const [notes, setNotes] = useState([]);
 
-  const addNote = (noteText) => {
-    setNotes((prevNotes) => [...prevNotes, { id: Date.now().toString(), text: noteText }]);
+  const addNote = (note) => {
+    setNotes((prevNotes) => [...prevNotes, note]);
   };
 
   return (
