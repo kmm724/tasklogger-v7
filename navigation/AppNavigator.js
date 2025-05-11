@@ -15,7 +15,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {activeUser == null && (
+        {!activeUser && (
           <Stack.Screen name="Login" component={LoginScreen} />
         )}
         {activeUser?.role === 'gc' && (
